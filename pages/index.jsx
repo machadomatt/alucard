@@ -5,8 +5,18 @@ import { useRouter } from 'next/router'
 import aurora from '../public/aurora-borealis.jpg'
 
 export default function Home() {
-    const [username, setUsername] = useState(['machadomatt'])
+    const [username, setUsername] = useState('machadomatt')
+    const [btnDisabled, setBtnDisabled] = useState(false)
     const route = useRouter()
+
+    const handleUserInput = (event) => {
+        setUsername(event.target.value)
+        if (event.target.value.length <= 0 || event.target.value.length > 25) {
+            setBtnDisabled(true)
+        } else {
+            setBtnDisabled(false)
+        }
+    }
 
     return (
         <div
@@ -34,13 +44,12 @@ export default function Home() {
                             className="self-stretch px-3 py-1 mb-6 transition duration-200 rounded-full shadow-md bg-white/20 backdrop-blur-lg focus:outline-none hover:bg-white/60 focus:shadow-lg"
                             type="text"
                             value={username}
-                            onChange={(event) =>
-                                setUsername(event.target.value)
-                            }
+                            onChange={handleUserInput}
                         />
                         <button
-                            className="py-1 transition duration-200 rounded-full shadow-md px-7 bg-white/25 backdrop-blur-md hover:bg-white/60 hover:shadow-lg active:shadow-md"
+                            className="py-1 transition duration-200 rounded-full shadow-md px-7 bg-white/25 backdrop-blur-md hover:bg-white/60 hover:shadow-lg active:shadow-md disabled:cursor-not-allowed disabled:opacity-30"
                             type="submit"
+                            disabled={btnDisabled}
                         >
                             Entrar
                         </button>
