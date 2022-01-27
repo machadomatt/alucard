@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .chat-scrollbar::-webkit-scrollbar {
+        @apply w-3 h-3;
+    }
+
+    .chat-scrollbar::-webkit-scrollbar-track {
+        @apply rounded-full bg-gray-900/10;
+    }
+
+    .chat-scrollbar::-webkit-scrollbar-thumb {
+        @apply border border-solid rounded-full bg-gray-900/10 border-gray-900/10;
+    }
+
+    .chat-scrollbar::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-900/30;
+    }
+}
