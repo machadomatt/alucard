@@ -8,13 +8,13 @@ export default function ChatMessage({ message }) {
         >
             <div className="flex items-center mb-3 gap-x-3">
                 <Image
-                    src={`https://github.com/${message.user}.png`}
-                    alt={message.user}
+                    src={`https://github.com/${message.from}.png`}
+                    alt={message.from}
                     className="rounded-full"
                     width={32}
                     height={32}
                 />
-                <h3 className="">{message.user}</h3>
+                <h3 className="">{message.from}</h3>
                 <span className="text-xs">2022-01-26</span>
             </div>
             <p>{message.message}</p>

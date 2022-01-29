@@ -1,9 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ChatMessage from './chat-message'
+import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/router'
+
+const supabaseClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
 export default function ChatBox() {
+    const route = useRouter()
+    const loggedinUser = route.query.username
+
     const [chatTextInput, setChatTextInput] = useState('')
     const [messages, setMessages] = useState([])
+
+    useEffect(() => {
+        const supabaseData = supabaseClient
+            .from('messages')
+            .select('*')
+            .order('id', { ascending: false })
+            .then(({ data }) => setMessages(data))
+    }, [])
 
     const handleTextInput = (event) => {
         setChatTextInput(event.target.value)
@@ -13,14 +31,18 @@ export default function ChatBox() {
         if (event.key === 'Enter' && event.shiftKey === false) {
             event.preventDefault()
             setChatTextInput('')
-            setMessages([
-                {
-                    message: chatTextInput,
-                    user: 'machadomatt',
-                    id: messages.length + 1,
-                },
-                ...messages,
-            ])
+
+            supabaseClient
+                .from('messages')
+                .insert([
+                    {
+                        message: chatTextInput,
+                        from: loggedinUser,
+                    },
+                ])
+                .then(({ data }) => {
+                    setMessages([data[0], ...messages])
+                })
         }
     }
 

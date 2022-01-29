@@ -37,7 +37,7 @@ export default function Home() {
                         className="flex flex-col items-center"
                         onSubmit={(event) => {
                             event.preventDefault()
-                            route.push('/chat')
+                            route.push(`/chat?username=${username}`)
                         }}
                     >
                         <input
