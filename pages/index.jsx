@@ -27,7 +27,7 @@ export default function Home() {
                 <title>Boas-vindas! Conversas das nuvens</title>
                 <meta name="description" content="Conversas das nuvens" />
             </Head>
-            <div className="grid items-center max-w-2xl grid-cols-1 gap-12 p-6 rounded-lg shadow-xl bg-white/30 backdrop-blur-md md:grid-cols-2 md:p-8">
+            <div className="grid items-center w-full max-w-xl grid-cols-1 gap-8 p-6 rounded-lg shadow-xl bg-white/30 backdrop-blur-md md:grid-cols-2 md:p-8">
                 <div className="text-center">
                     <h1 className="mb-0 text-3xl font-semibold">
                         Boas-vindas!
@@ -55,15 +55,17 @@ export default function Home() {
                         </button>
                     </form>
                 </div>
-                <div className="flex flex-col items-center max-w-xs">
-                    <Image
-                        src={`https://github.com/${username}.png`}
-                        alt="User profile photo"
-                        className="rounded-full"
-                        width={460}
-                        height={460}
-                    />
-                    <p className="mt-5">{username}</p>
+                <div className="flex flex-col items-center md:items-end">
+                    <div className="text-center">
+                        <Image
+                            src={`https://github.com/${username}.png`}
+                            alt="User profile photo"
+                            className="rounded-full"
+                            width={180}
+                            height={180}
+                        />
+                        <p className="mt-5">{username}</p>
+                    </div>
                 </div>
             </div>
         </div>
