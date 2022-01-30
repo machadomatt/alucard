@@ -58,7 +58,7 @@ export default function ChatBox() {
 
     return (
         <>
-            <div className="flex flex-col-reverse gap-y-6 h-[450px] overflow-y-scroll chat-scrollbar">
+            <div className="flex flex-col-reverse gap-y-6 h-[50vh] overflow-y-scroll chat-scrollbar">
                 {messages.map((message) => (
                     <ChatMessage message={message} key={message.id} />
                 ))}
