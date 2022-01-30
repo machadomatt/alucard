@@ -29,7 +29,6 @@ export default function ChatBox() {
     }
 
     const handleSubmitMessage = (customMessage) => {
-        console.log(customMessage)
         supabaseClient
             .from('messages')
             .insert([
