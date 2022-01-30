@@ -9,6 +9,15 @@ const supabaseClient = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 )
 
+const realTimeMessages = (addMessage) => {
+    return supabaseClient
+        .from('messages')
+        .on('INSERT', (data) => {
+            addMessage(data.new)
+        })
+        .subscribe()
+}
+
 export default function ChatBox() {
     const route = useRouter()
     const loggedinUser = route.query.username
@@ -22,6 +31,12 @@ export default function ChatBox() {
             .select('*')
             .order('id', { ascending: false })
             .then(({ data }) => setMessages(data))
+
+        realTimeMessages((newMessage) => {
+            setMessages((currentMessages) => {
+                return [newMessage, ...currentMessages]
+            })
+        })
     }, [])
 
     const handleTextInput = (event) => {
@@ -37,9 +52,7 @@ export default function ChatBox() {
                     from: loggedinUser,
                 },
             ])
-            .then(({ data }) => {
-                setMessages([data[0], ...messages])
-            })
+            .then()
         setChatTextInput('')
     }
 
