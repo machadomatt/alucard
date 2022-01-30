@@ -28,30 +28,13 @@ export default function ChatBox() {
         setChatTextInput(event.target.value)
     }
 
-    const handleTextInputSubmit = (event) => {
-        if (event.key === 'Enter' && event.shiftKey === false) {
-            event.preventDefault()
-            supabaseClient
-                .from('messages')
-                .insert([
-                    {
-                        message: chatTextInput,
-                        from: loggedinUser,
-                    },
-                ])
-                .then(({ data }) => {
-                    setMessages([data[0], ...messages])
-                })
-            setChatTextInput('')
-        }
-    }
-
-    const handleStickerSubmit = (stickerMessage) => {
+    const handleSubmitMessage = (customMessage) => {
+        console.log(customMessage)
         supabaseClient
             .from('messages')
             .insert([
                 {
-                    message: stickerMessage,
+                    message: customMessage ? customMessage : chatTextInput,
                     from: loggedinUser,
                 },
             ])
@@ -77,12 +60,17 @@ export default function ChatBox() {
                     placeholder="Message..."
                     value={chatTextInput}
                     onChange={handleTextInput}
-                    onKeyPress={handleTextInputSubmit}
+                    onKeyPress={(event) => {
+                        if (event.key === 'Enter' && event.shiftKey === false) {
+                            event.preventDefault()
+                            handleSubmitMessage()
+                        }
+                    }}
                 ></textarea>
                 <ButtonSendSticker
-                    onStickerClick={(sticker) => {
-                        handleStickerSubmit(`:sticker: ${sticker}`)
-                    }}
+                    onStickerClick={(sticker) =>
+                        handleSubmitMessage(`:sticker: ${sticker}`)
+                    }
                 />
             </div>
         </>
